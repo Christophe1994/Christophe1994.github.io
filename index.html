@@ -1,0 +1,108 @@
+<!Doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!--style-->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<!--style-->
+	</head>
+  	<body>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center">
+						<h2>Cryptographie</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					
+				</div>
+				<div class="col-md-6 card">
+					<div class="row card-body">
+						<div class="col-md-6">
+							<div class="">
+								<div class="">
+									<div class="form-group">
+										<label for="crypt">Entrez le texte à chiffrer</label>
+										<textarea name="" id="textEnClaire" cols="30" rows="5" class="form-control"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="key">Clé de chiffrement</label>
+										<input type="number" id="key" placeholder="entrer la clé" class="form-control" min="1" max="25">
+									</div>
+									<div class="mt-4">
+										<button class="btn btn-info" id="btcrypt">Crypté</button>
+										<button class="btn btn-danger" id="reset" onclick="reset()">Réinitialisé</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="crypt">Text chiffré</label>
+								<textarea name="" id="textChiffrer" cols="30" rows="9" class="form-control"></textarea>
+							</div>
+							<button class="btn btn-success" id="btdcrypt">Décrypté</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="text-center text-danger font-weight-bold mt-2">
+						Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt dolor vitae magni earum quasi labore similique numquam voluptatem cupiditate atque inventore ab nemo, esse sit, nesciunt, est quo facilis ipsam.
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		<script src="js/reset.js"></script>
+		<script src="js/alphabet.js"></script>
+		<script src="js/cryptage.js"></script>
+		<script src="js/decryptage.js"></script>
+		
+		<script>
+			//definition de l'alphabet normal
+			let alphabetEnClaire = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+			
+			let btcrypt = document.getElementById('btcrypt');
+			btcrypt.addEventListener('click', function () {
+				let cle = document.getElementById('key').value
+				
+				//fonction renvoyant l'alphabet crypter a partir d'une clé
+				let alphabetCrypter = alphabet(alphabetEnClaire, cle);
+				
+				let textEnClaire = document.getElementById('textEnClaire').value
+
+				//nettoyage du texte en claire
+				textEnClaire = textEnClaire.trim().replace(/[îï]/g, 'i').replace(/[èéê]/g, 'e').replace(/[^a-zA-Z\s]/gi, '')
+
+				//texte crypté
+				let textChiffer = cryptage(alphabetCrypter, alphabetEnClaire, textEnClaire)
+
+				document.getElementById('textChiffrer').value = textChiffer;
+				//console.log (textChiffer)
+			})
+
+			let btdcrypt = document.getElementById('btdcrypt');
+			btdcrypt.addEventListener('click', function() {
+				let cle = document.getElementById('key').value
+				let textChiffrer = document.getElementById('textChiffrer').value
+
+				//fonction renvoyant l'alphabet crypter a partir d'une clé
+				let alphabetCrypter = alphabet(alphabetEnClaire, cle);
+
+				//texte decrypté
+				let textEnClaire = decryptage(alphabetCrypter, alphabetEnClaire, textChiffrer)
+				//alert(textEnClaire)
+				document.getElementById('textEnClaire').value = textEnClaire;
+			})
+			
+		</script>
+	</body>
+</html>
